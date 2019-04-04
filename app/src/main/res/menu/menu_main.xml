@@ -13,3 +13,4 @@
         android:title="@string/sortByPriority"
         app:showAsAction="never" />
 </menu>
+
