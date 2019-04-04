@@ -3,4 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="sortByDueDate">Sort By Due Date</string>
     <string name="sortByPriority">Sort By Priority</string>
+    <string name="save">save</string>
+    <string name="assignmentNameLabel">Assignment Name</string>
+    <string name="dueDateLabel">Due Date</string>
+    <string name="add_note_label">Add Extra Note</string>
 </resources>

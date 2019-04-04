@@ -11,9 +11,7 @@ public class AddingNewAssignmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_new_assignment);
-        Toast.makeText(getApplicationContext(),
-                "Welcome :)",
-                Toast.LENGTH_LONG).show();
+
     }
 
 }
