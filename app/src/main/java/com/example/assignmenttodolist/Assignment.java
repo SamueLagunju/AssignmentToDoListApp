@@ -3,19 +3,19 @@ package com.example.assignmenttodolist;
 public class Assignment {
 
     public Assignment(Integer ID, String Name, String DDate, Integer Priority, String Note) {
-        ASSIGNMENT_ID = ID;
-        ASSIGNMENT_NAME = Name;
-        ASSIGNMENT_DDATE = DDate;
-        ASSIGNMENT_PRIORITY = Priority;
-        ASSIGNMENT_NOTE = Note;
+        Assignment_ID = ID;
+        Assignment_Name = Name;
+        Assignment_DDate = DDate;
+        Assignment_Priority = Priority;
+        Assignment_Note = Note;
     }
-    public Integer ASSIGNMENT_ID;
+    public Integer Assignment_ID;
 
-    public String ASSIGNMENT_NAME;
+    public String Assignment_Name;
 
-    public String ASSIGNMENT_DDATE;
+    public String Assignment_DDate;
 
-    public Integer ASSIGNMENT_PRIORITY;
+    public Integer Assignment_Priority;
 
-    public String ASSIGNMENT_NOTE;
+    public String Assignment_Note;
 }
