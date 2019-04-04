@@ -14,6 +14,8 @@ import android.webkit.WebView;
 
 import java.net.URI;
 
+import android.widget.Toast;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,14 +26,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -50,6 +44,32 @@ public class MainActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+     *  Function        :   public void onClick(View whatButton)
+     *  Description     :   Does a set of instructions based on what button was clicked
+     *  Parameters      :   View whatButton
+     *  Returns         :   N/A
+     */
+    public void onClick(View whatButton){
+        //If the button to add an assignment was clicked.
+        if(whatButton == findViewById(R.id.AddAssignmentFloatingBtn))
+        {
+            Log.i("User Action:", "User is adding an assignment");
+            try
+            {
+                Intent addingNewAssignmentIntent = new Intent(this, AddingNewAssignmentActivity.class);
+                startActivity(addingNewAssignmentIntent);
+            }
+            catch(Exception error)
+            {
+                Toast.makeText(getApplicationContext(), "Error, Cannot add an assignment at the time, try again.", Toast.LENGTH_LONG).show();
+                Log.e("Error","Received an exception " + error.getMessage());
+            }
+        }
+
+
     }
 
 
