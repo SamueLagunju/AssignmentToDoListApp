@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddingNewAssignmentActivity"
-            android:label="New Assignment"></activity>
+        <activity android:name=".AssignmentDetail"></activity>
+        <activity
+            android:name=".AddingNewAssignmentActivity"
+            android:label="New Assignment" />
         <activity
             android:name=".MainActivity"
             android:label="Assignments"
