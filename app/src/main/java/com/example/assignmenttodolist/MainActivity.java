@@ -142,10 +142,10 @@ public class MainActivity extends AppCompatActivity {
     //I am incomplete
     public void PopulateList(ArrayList<Assignment> AssignmentList)
     {
-       /* ListView AssignmntListView = findViewById(R.id.taskView);
+       /* ListView AssignmentListView = findViewById(R.id.taskView);
         ArrayAdapter<Assignment> arrayAdapter = new ArrayAdapter<Assignment>(
                 this, android.R.layout.simple_list_item_1, AssignmentList
         );
-        AssignmntListView.setAdapter(arrayAdapter);*/
+        AssignmentListView.setAdapter(arrayAdapter);*/
     }
 }

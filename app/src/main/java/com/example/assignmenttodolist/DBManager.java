@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -162,7 +163,7 @@ public class DBManager
     //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
     public long insertAssignment(Assignment assignment) {
         ContentValues cv = new ContentValues();
-        cv.put(ASSIGNMENT_ID, assignment.Assignment_ID);
+        //cv.put(ASSIGNMENT_ID, assignment.Assignment_ID);
         cv.put(ASSIGNMENT_NAME, assignment.Assignment_Name);
         cv.put(ASSIGNMENT_DDATE, assignment.Assignment_DDate);
         cv.put(ASSIGNMENT_PRIORITY, assignment.Assignment_Priority);
@@ -183,14 +184,14 @@ public class DBManager
     //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
     public int updateAssignment(Assignment assignment) {
         ContentValues cv = new ContentValues();
-        cv.put(ASSIGNMENT_ID, assignment.Assignment_ID);
+        //cv.put(ASSIGNMENT_ID, assignment.Assignment_ID);
         cv.put(ASSIGNMENT_NAME, assignment.Assignment_Name);
         cv.put(ASSIGNMENT_DDATE, assignment.Assignment_DDate);
         cv.put(ASSIGNMENT_PRIORITY, assignment.Assignment_Priority);
         cv.put(ASSIGNMENT_NOTE, assignment.Assignment_Note);
 
-        String where = ASSIGNMENT_ID + "= ?";
-        String[] whereArgs = {String.valueOf(assignment.Assignment_ID)};
+        String where = ASSIGNMENT_NAME + "= ?";
+        String[] whereArgs = {String.valueOf(assignment.Assignment_Name)};
 
         this.openWriteableDB();
         int rowCount = db.update(ASSIGNMENT_TABLE, cv, where, whereArgs);
@@ -205,9 +206,9 @@ public class DBManager
     // Returns		: Int rowCount - Number of rows modified. Should be one if changing one assignment
     // Sources      : Marc Bueno Sample Code
     //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
-    public int deleteAssignment (long id) {
-        String where = ASSIGNMENT_ID + "= ?";
-        String[] whereArgs = { String.valueOf(id) };
+    public int deleteAssignment (String name) {
+        String where = ASSIGNMENT_NAME + "= ?";
+        String[] whereArgs = { String.valueOf(name) };
 
         this.openWriteableDB();
         int rowCount = db.delete(ASSIGNMENT_TABLE, where, whereArgs);
@@ -215,6 +216,15 @@ public class DBManager
 
         return rowCount;
     }
+
+
+/*    public boolean populateList() {
+        String[] columns = {ASSIGNMENT_NAME, ASSIGNMENT_DDATE, ASSIGNMENT_PRIORITY, ASSIGNMENT_NOTE};
+        int[] to = {R.id.AssignmentName, R.id.AssignmentDDate, R.id.AssignmentPriority};
+    }*/
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Method		: deleteAllAssignments()
     // Description	: Deletes all assignment in table
