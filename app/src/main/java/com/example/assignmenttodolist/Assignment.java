@@ -15,9 +15,11 @@ package com.example.assignmenttodolist;
 // Methods 	    :
 public class Assignment {
 
+    public Assignment(){}
+
     // Class Constructor
-    public Assignment(Integer ID, String Name, String DDate, Integer Priority, String Note) {
-        Assignment_ID = ID;
+    public Assignment(/*Integer ID,*/ String Name, String DDate, Integer Priority, String Note) {
+        /*Assignment_ID = ID;*/
         Assignment_Name = Name;
         Assignment_DDate = DDate;
         Assignment_Priority = Priority;
@@ -30,6 +32,8 @@ public class Assignment {
     public String Assignment_DDate;
     public Integer Assignment_Priority;
     public String Assignment_Note;
+
+//    public void SetAssignmentName(String newAssignment) =
 
 
 }

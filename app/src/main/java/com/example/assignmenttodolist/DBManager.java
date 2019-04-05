@@ -12,7 +12,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 // Class   	    : DBManager
@@ -51,7 +54,7 @@ public class DBManager
 
     // Table CREATE and DROP Constants
     public static final String CREATE_ASSIGNMENT_TABLE = "CREATE TABLE " + ASSIGNMENT_TABLE + " (" +
-            ASSIGNMENT_ID       + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+          //  ASSIGNMENT_ID       + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             ASSIGNMENT_NAME     + " TEXT    NOT NULL, " +
             ASSIGNMENT_DDATE    + " TEXT    NOT NULL, " +
             ASSIGNMENT_PRIORITY + " INTEGER NOT NULL, " +
@@ -91,7 +94,7 @@ public class DBManager
             db.execSQL(CREATE_ASSIGNMENT_TABLE);
 
             // Insert a default assignment
-            db.execSQL("INSERT INTO Assignment VALUES (1, 'Example', 'March 5th, 2019', 1, 'This is an example')");
+            //db.execSQL("INSERT INTO Assignment VALUES (1, 'Example', 'March 5th, 2019', 1, 'This is an example')");
 
         }
 
@@ -137,7 +140,7 @@ public class DBManager
         else {
             try {
                 Assignment assignment = new Assignment(
-                        cursor.getInt(ASSIGNMENT_ID_COL),
+                        /*cursor.getInt(ASSIGNMENT_ID_COL),*/
                         cursor.getString(ASSIGNMENT_NAME_COL),
                         cursor.getString(ASSIGNMENT_DDATE_COL),
                         cursor.getInt(ASSIGNMENT_PRIORITY_COL),
@@ -212,4 +215,57 @@ public class DBManager
 
         return rowCount;
     }
+
+    // Method		: deleteAllAssignments()
+    // Description	: Deletes all assignment in table
+    // Parameters	: N/A
+    // Returns		: Int rowCount - Number of rows modified.
+    // Source       : http://android-er.blogspot.com/2011/06/simple-example-using-androids-sqlite_02.html
+    public int deleteAllAssignments()
+    {
+        this.openWriteableDB();
+        int rowCount = db.delete(ASSIGNMENT_TABLE, null, null);
+        this.closeDB();
+        return rowCount;
+    }
+
+    public List<Assignment> getAllAssignments()
+    {
+        List<Assignment> allAssignmentList = new ArrayList<>();
+        this.openWriteableDB();
+        Cursor dataCursor = db.rawQuery("SELECT * FROM "+ ASSIGNMENT_TABLE+" ;", null);
+        StringBuffer buffer = new StringBuffer();
+        Assignment assignment = null;
+
+        if(dataCursor.getCount() == 0){return null;}
+        else{
+            try{
+
+                while(dataCursor.moveToNext())
+                {
+                    assignment = new Assignment();
+
+                    String assignmentName = dataCursor.getString(dataCursor.getColumnIndexOrThrow("AssignmentName"));
+                    assignment.Assignment_Name = assignmentName;
+                    buffer.append(assignment);
+
+                    allAssignmentList.add(assignment);
+
+                }
+
+                for(Assignment mo:allAssignmentList)
+                {
+                    Log.i("This is a test I guess ", mo.Assignment_Name);
+                }
+            }
+            catch (Exception databaseError)
+            {
+                Log.e("Error","Received an exception " + databaseError.getMessage());
+                return null;
+            }
+        }
+
+        return allAssignmentList;
+    }
+
 }
