@@ -9,6 +9,7 @@
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/assignmentRecyclerList"
         android:layout_width="395dp"
         android:layout_height="478dp"
         android:layout_marginStart="8dp"
