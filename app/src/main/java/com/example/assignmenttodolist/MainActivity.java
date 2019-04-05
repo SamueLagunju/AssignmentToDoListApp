@@ -11,11 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-
 import java.net.URI;
+import java.util.ArrayList;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.util.Log;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        PopulateList(getAssignments(""));
 
     }
 
@@ -72,11 +76,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /*
+     *  Function        :   public void VisitPage(View view)
+     *  Description     :   takes the user to the econestoga website for our favourite course, Mobile Application Development
+     *  Parameters      :   View view
+     *  Returns         :   N/A
+     */
     public void VisitPage(View view) {
         String link = "https://conestoga.desire2learn.com/d2l/home/244302";
         Uri viewURI = Uri.parse(link);
         Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewURI);
         startActivity(viewIntent);
+    }
+
+    //I am incomplete
+    public void PopulateList(ArrayList<Assignment> AssignmentList)
+    {
+        ListView AssignmntListView = findViewById(R.id.List);
+        ArrayAdapter<Assignment> arrayAdapter = new ArrayAdapter<Assignment>(
+                this, android.R.layout.simple_list_item_1, AssignmentList
+        );
+        AssignmntListView.setAdapter(arrayAdapter);
     }
 }

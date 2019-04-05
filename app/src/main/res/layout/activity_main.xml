@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,6 +45,8 @@
         android:src="@android:drawable/ic_menu_info_details"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fab"
+        app:layout_constraintEnd_toStartOf="@+id/AddAssignmentFloatingBtn"
         />
+
+
 </android.support.design.widget.CoordinatorLayout>

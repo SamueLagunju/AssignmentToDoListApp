@@ -18,4 +18,6 @@ public class Assignment {
     public Integer Assignment_Priority;
 
     public String Assignment_Note;
+
+
 }
