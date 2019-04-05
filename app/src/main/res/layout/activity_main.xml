@@ -56,7 +56,7 @@
         android:onClick="onClick"
         android:text="Button"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="left|center" />
+        app:layout_anchorGravity="bottom|center" />
 
 
 </android.support.design.widget.CoordinatorLayout>

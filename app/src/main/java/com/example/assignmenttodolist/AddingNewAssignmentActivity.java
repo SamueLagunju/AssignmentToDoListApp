@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class AddingNewAssignmentActivity extends AppCompatActivity {
 
     //Buffer variables to acquire the user's input
-    String assignmentNameBuffer;
-    String dueDateBuffer;
+    EditText assignmentNameBuffer;
+    EditText dueDateBuffer;
 
-    String extraNotes;
+    EditText extraNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +51,23 @@ public class AddingNewAssignmentActivity extends AppCompatActivity {
             try
             {
                 //Verify data here.
-                assignmentNameBuffer = findViewById(R.id.assignmentField).toString();
-                dueDateBuffer = findViewById(R.id.dueDateField).toString();
-                extraNotes = findViewById(R.id.extraNoteWidget).toString();
-                Assignment newAssignment = new Assignment(assignmentNameBuffer, dueDateBuffer, 3, extraNotes);
+                assignmentNameBuffer = findViewById(R.id.assignmentField);
+                dueDateBuffer = findViewById(R.id.dueDateField);
+                extraNotes = findViewById(R.id.extraNoteWidget);
+
+                String assignmentName = assignmentNameBuffer.getText().toString();
+                String dueDate = dueDateBuffer.getText().toString();
+                String extaNotes = extraNotes.getText().toString();
+
+
+                Assignment newAssignment = new Assignment(assignmentName, dueDate, 3, extaNotes);
                 DBManager databaseManager = new DBManager(getApplicationContext());
 
-                databaseManager.deleteAllAssignments();
-                Toast.makeText(getApplicationContext(), "Database deleted", Toast.LENGTH_LONG).show();
+/*                databaseManager.deleteAllAssignments();
+                Toast.makeText(getApplicationContext(), "Database deleted", Toast.LENGTH_LONG).show();*/
 
-                /*databaseManager.insertAssignment(newAssignment);
-                Toast.makeText(getApplicationContext(), "Insertion completion", Toast.LENGTH_LONG).show();*/
+                long result = databaseManager.insertAssignment(newAssignment);
+                Toast.makeText(getApplicationContext(), "Result: " + result, Toast.LENGTH_LONG).show();
                 //Put a try block here.
                 //Creating an intent to go back to the main activity
                 Intent intent = new Intent();
