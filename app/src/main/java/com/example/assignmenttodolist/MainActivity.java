@@ -1,6 +1,7 @@
 package com.example.assignmenttodolist;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,19 +11,39 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * FILE:			MainActivity.java
+ * PROJECT:		    assignmentApp
+ * PROGRAMMER:	    Oloruntoba Lagunju.
+ *                  Gabriel Stewart
+ *                  Connor Lynch
+ * DATE:			April 5th 2019
+ * DESCRIPTION:     This is a file that supports code for the main activity of the app
+ *                  developed in java
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     DBManager databaseManager;
+    ArrayList<String> listItem;
+    ArrayAdapter listAdapter;
+    ListView assignmentList;
 
-    List<Assignment> assignmentList;
-
+    /*
+     *  Function        :   protected void onCreate(Bundle savedInstanceState)
+     *  Description     :   Creates the main activity
+     *  Parameters      :   Bundle savedInstanceState
+     *  Returns         :   N/A
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        listItem = new ArrayList<>();
+
+        assignmentList = findViewById(R.id.assignment_list_view);
+
+        viewData();
 
 
     }
@@ -76,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(whatButton == findViewById(R.id.displayList))
         {
-            databaseManager = new DBManager(getApplicationContext());
+/*            databaseManager = new DBManager(getApplicationContext());
             assignmentList = new ArrayList<>();
-            assignmentList = databaseManager.getAllAssignments();
+            assignmentList = databaseManager.getAllAssignments();*/
         }
 
 
@@ -148,4 +175,28 @@ public class MainActivity extends AppCompatActivity {
         );
         AssignmentListView.setAdapter(arrayAdapter);*/
     }
+
+
+    private void viewData()
+    {
+        databaseManager = new DBManager(getApplicationContext());
+        Cursor cursor = databaseManager.viewData();
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+        }
+
+        else
+        {
+            while(cursor.moveToNext())
+            {
+                listItem.add(cursor.getString(1));
+            }
+        }
+
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItem);
+
+        assignmentList.setAdapter(listAdapter);
+    }
+
 }
