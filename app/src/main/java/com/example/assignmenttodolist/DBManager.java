@@ -108,7 +108,7 @@ public class DBManager
         }
     }
 
-    // Method		: getAssignments
+/*    // Method		: getAssignments
     // Description	: Returns ArrayList of Assignments matching condition
     // Parameters	: String condition - Optional condition for returned assignments
     // Returns		: ArrayList<Assignment> - Contains list of corresponding assignments
@@ -126,8 +126,9 @@ public class DBManager
         this.closeDB();
 
         return Assignments;
-    }
+    }*/
 
+/*
     // Method		: getAssignmentFromCursor
     // Description	: Uses cursor to return Assignment
     // Parameters	: Cursor - Cursor that reads through result of query
@@ -141,7 +142,9 @@ public class DBManager
         else {
             try {
                 Assignment assignment = new Assignment(
-                        /*cursor.getInt(ASSIGNMENT_ID_COL),*/
+                        */
+/*cursor.getInt(ASSIGNMENT_ID_COL),*//*
+
                         cursor.getString(ASSIGNMENT_NAME_COL),
                         cursor.getString(ASSIGNMENT_DDATE_COL),
                         cursor.getInt(ASSIGNMENT_PRIORITY_COL),
@@ -154,6 +157,7 @@ public class DBManager
             }
         }
     }
+*/
 
     // Method		: insertAssignment
     // Description	: Inserts assignment passed as parameter into table

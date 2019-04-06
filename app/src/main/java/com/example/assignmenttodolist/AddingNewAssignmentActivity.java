@@ -33,7 +33,6 @@ public class AddingNewAssignmentActivity extends AppCompatActivity {
     //Variable for the date picker dialog
     private DatePickerDialog.OnDateSetListener datePickerListener;
 
-
     //Buffer variables to acquire the user's input
     EditText assignmentNameBuffer;
     EditText dueDateBuffer;
@@ -120,7 +119,7 @@ public class AddingNewAssignmentActivity extends AppCompatActivity {
         }
 
         //If the save button was pressed
-        if(whatButton == findViewById(R.id.SaveAssignmentBtn))
+        else if(whatButton == findViewById(R.id.SaveAssignmentBtn))
         {
             if((!validateFields()))
             {
@@ -135,18 +134,15 @@ public class AddingNewAssignmentActivity extends AppCompatActivity {
                     //Saving the user's input to the database.
                     String assignmentName = assignmentNameBuffer.getText().toString();
                     String dueDate = dueDateBuffer.getText().toString();
-                    String extaNotes = extraNotes.getText().toString();
+                    String extraNote = extraNotes.getText().toString();
+                    Integer priorityLevel = Integer.valueOf(selectedRadioButton.getText().toString());
 
+                    //Instantiating a new assignment class filled with the user's input
+                    Assignment newAssignment = new Assignment(assignmentName, dueDate, priorityLevel, extraNote);
 
-                    Assignment newAssignment = new Assignment(assignmentName, dueDate, 3, extaNotes);
+                    //Instantiating a new DBManager to insert the new data to the database
                     DBManager databaseManager = new DBManager(getApplicationContext());
-
-/*                databaseManager.deleteAllAssignments();
-                Toast.makeText(getApplicationContext(), "Database deleted", Toast.LENGTH_LONG).show();*/
-
-                    long result = databaseManager.insertAssignment(newAssignment);
-                    Toast.makeText(getApplicationContext(), "Result: " + result, Toast.LENGTH_LONG).show();
-                    //Put a try block here.
+                    databaseManager.insertAssignment(newAssignment);
                     //Creating an intent to go back to the main activity
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
@@ -156,11 +152,12 @@ public class AddingNewAssignmentActivity extends AppCompatActivity {
                 catch (Exception error)
                 {
                     Log.e("Error","Received an exception " + error.getMessage());
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    //If there are an exceptions, close the activity and go back to the main activity with a cancelled result
+                    Intent cancelledIntent = new Intent();
+                    setResult(RESULT_CANCELED, cancelledIntent);
+                    finish();   //Rerunning back to the main activity
                 }
             }
-
-
         }
 
     }
