@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        databaseManager = new DBManager(getApplicationContext());
+        databaseManager.deleteAllAssignments();
+
         assignmentArrayList = new ArrayList<>();
 
         assignmentList = findViewById(R.id.assignment_list_view);
@@ -87,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClick(View whatButton){
         //If the button to add an assignment was clicked.
+        //If the button to view the about activity was clicked
+        if(whatButton == findViewById(R.id.viewSettings))
+        {
+            //Creating an intent to start an activity
+            Intent addingAssIntent = new Intent(this, AboutActivity.class);
+            startActivity(addingAssIntent); //Starting the activity
+        }
+
+
         if(whatButton == findViewById(R.id.AddAssignmentFloatingBtn))
         {
             Log.i("User Action:", "User is adding an assignment");
@@ -146,16 +158,6 @@ public class MainActivity extends AppCompatActivity {
         Uri viewURI = Uri.parse(link);
         Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewURI);
         startActivity(viewIntent);
-    }
-
-    //I am incomplete
-    public void PopulateList(ArrayList<Assignment> AssignmentList)
-    {
-       /* ListView AssignmentListView = findViewById(R.id.taskView);
-        ArrayAdapter<Assignment> arrayAdapter = new ArrayAdapter<Assignment>(
-                this, android.R.layout.simple_list_item_1, AssignmentList
-        );
-        AssignmentListView.setAdapter(arrayAdapter);*/
     }
 
 
