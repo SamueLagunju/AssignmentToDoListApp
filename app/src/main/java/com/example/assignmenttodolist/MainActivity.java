@@ -34,7 +34,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     DBManager databaseManager;
-    ArrayList<String> listItem;
+    ArrayList<String> assignmentArrayList;
+
     ArrayAdapter listAdapter;
     ListView assignmentList;
 
@@ -51,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        listItem = new ArrayList<>();
+        assignmentArrayList = new ArrayList<>();
 
         assignmentList = findViewById(R.id.assignment_list_view);
 
@@ -101,14 +101,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if(whatButton == findViewById(R.id.displayList))
-        {
-/*            databaseManager = new DBManager(getApplicationContext());
-            assignmentList = new ArrayList<>();
-            assignmentList = databaseManager.getAllAssignments();*/
-        }
-
-
     }
 
     /*
@@ -126,19 +118,9 @@ public class MainActivity extends AppCompatActivity {
         {
             if(codeResult == RESULT_OK)
             {
-                //Variable that contains message from the addAssActivity
-                String assignmentData = intentData.getStringExtra("firstReturnMessage");
-
-
-                //Temporary ListView for the taskView widget
-              /*  ListView assignmentList = findViewById(R.id.taskView);
-                //Array adapter for the temporary list view
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<>
-                        (this, android.R.layout.simple_list_item_1, assignmentItems);
-
-                assignmentList.setAdapter(listAdapter); //Setting the listView to the adapter
-                //Adding data inputted from the user to the taskView widget
-                listAdapter.add(assignmentData);*/
+                //Clearing the old list
+                listAdapter.clear();
+                viewData();
             }
             else
             {
@@ -190,11 +172,13 @@ public class MainActivity extends AppCompatActivity {
         {
             while(cursor.moveToNext())
             {
-                listItem.add(cursor.getString(1));
+                assignmentArrayList.add(cursor.getString(1)
+                        + "\n\nDue Date: " + cursor.getString(2)
+                        + "\n\nPriority: " + cursor.getString(3));
             }
         }
 
-        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItem);
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, assignmentArrayList);
 
         assignmentList.setAdapter(listAdapter);
     }

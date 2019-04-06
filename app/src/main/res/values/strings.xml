@@ -7,4 +7,7 @@
     <string name="assignmentNameLabel">Assignment Name</string>
     <string name="dueDateLabel">Due Date</string>
     <string name="add_note_label">Add Extra Note</string>
+    <string name="priority_level_3">3</string>
+    <string name="priority_level_2">2</string>
+    <string name="priority_level_1">1</string>
 </resources>

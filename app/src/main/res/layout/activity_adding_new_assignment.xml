@@ -132,14 +132,14 @@
                 android:layout_width="149dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="1" />
+                android:text="@string/priority_level_1" />
 
             <RadioButton
                 android:id="@+id/secondLevelOfPriority"
                 android:layout_width="149dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2" />
+                android:text="@string/priority_level_2" />
 
 
             <RadioButton
@@ -147,34 +147,8 @@
                 android:layout_width="149dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="3" />
+                android:text="@string/priority_level_3" />
         </RadioGroup>
-<!--        <RadioGroup
-            android:id="@+id/GroupBtns"
-            android:layout_width="300dp"
-            android:layout_height="90dp"
-            android:layout_below="@+id/dueDateField"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="86dp"
-            android:layout_marginRight="86dp">
-
-
-            <RadioButton
-                android:id="@+id/individualFieldBtn"
-                android:layout_width="149dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Individual_Label" />
-
-            <RadioButton
-                android:id="@+id/groupFieldBtn"
-                android:layout_width="149dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Group_Label" />
-        </RadioGroup>-->
 
         <EditText
             android:id="@+id/extraNoteWidget"

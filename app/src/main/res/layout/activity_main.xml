@@ -49,14 +49,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/AddAssignmentFloatingBtn" />
 
-    <Button
-        android:id="@+id/displayList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Button"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|center" />
-
 
 </android.support.design.widget.CoordinatorLayout>
