@@ -58,11 +58,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        databaseManager = new DBManager(getApplicationContext());
-        databaseManager.deleteAllAssignments();
-
         assignmentArrayList = new ArrayList<>();
-
         assignmentList = findViewById(R.id.assignment_list_view);
 
         viewData(3);
@@ -194,6 +190,20 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             }
+            case 3: {
+                cursor = databaseManager.viewData("AssignmentName");
+
+                if (cursor.getCount() == 0) {
+                    Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+                } else {
+                    while (cursor.moveToNext()) {
+                        assignmentArrayList.add(cursor.getString(0)
+                                + "\n\nDue Date: " + cursor.getString(1)
+                                + "\n\nPriority: " + cursor.getString(2));
+                    }
+                }
+                break;
+            }
         }
 
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, assignmentArrayList);
@@ -203,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /*
-     *  Function        :    public void ExportToTxt(View view)
+     *  Function        :   public void ExportToTxt(View view)
      *  Description     :   button that exports list items to a text file in downloads
      *  Parameters      :   View view
      *  Returns         :   N/A

@@ -127,12 +127,31 @@ public class DBManager
     // Description	: Returns a cursor for query results, displaying all assignments
     // Parameters	: N/A
     // Returns		: Cursor cursor - Allows walking through query results
-    public Cursor viewData()
+    public Cursor viewData(String whatOrder)
     {
-        this.openReadableDB();
-        String query = "Select * from " + ASSIGNMENT_TABLE;
-        Cursor cursor = db.rawQuery(query, null);
+        String query;
+        Cursor cursor;
 
+        if(whatOrder == "Date")
+        {
+            this.openReadableDB();
+            query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY DueDate";
+            cursor = db.rawQuery(query, null);
+        }
+
+        else if( whatOrder == "Priority")
+        {
+            this.openReadableDB();
+            query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY PRIORITY";
+            cursor = db.rawQuery(query, null);
+        }
+
+        else
+        {
+            this.openReadableDB();
+            query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY AssignmentName";
+            cursor = db.rawQuery(query, null);
+        }
         return cursor;
     }
 
