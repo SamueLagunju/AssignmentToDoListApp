@@ -59,4 +59,13 @@
         app:layout_anchorGravity="bottom|center" />
 
 
+    <Button
+        android:id="@+id/Export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ExportToTxt"
+        android:text="Export"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|left" />
+
 </android.support.design.widget.CoordinatorLayout>

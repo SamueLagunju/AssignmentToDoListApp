@@ -1,9 +1,11 @@
 package com.example.assignmenttodolist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,6 +16,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,4 +155,67 @@ public class MainActivity extends AppCompatActivity {
         );
         AssignmentListView.setAdapter(arrayAdapter);*/
     }
+
+
+    /*
+     *  Function        :    public void ExportToTxt(View view)
+     *  Description     :   button that exports list items to a text file in downloads
+     *  Parameters      :   View view
+     *  Returns         :   N/A
+     */
+    public void ExportToTxt(View view) {
+        final Context currentContext = getApplicationContext();
+        Toast.makeText(currentContext, "Beginning Export", Toast.LENGTH_SHORT).show();
+
+
+        new Thread(new Runnable() {
+          public void run() {
+
+        // Get the directory for the user's public pictures directory.
+        final File path =
+                Environment.getExternalStoragePublicDirectory
+                        (
+                                //Environment.DIRECTORY_PICTURES
+                                Environment.DIRECTORY_DOWNLOADS
+                        );
+
+        // Make sure the path directory exists.
+        if(!path.exists())
+        {
+            // Make it, if it doesn't exit
+            path.mkdirs();
+        }
+
+        final File file = new File(path, "TodoListExport.txt");
+
+        // Save your stream, don't forget to flush() it before closing it.
+
+        try
+        {
+            file.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.append("test");
+
+            myOutWriter.close();
+
+            fOut.flush();
+            fOut.close();
+        }
+        catch (IOException e)
+        {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+
+                   }
+
+            }).start();
+        }
+
+
+
+
+
+
+
 }
