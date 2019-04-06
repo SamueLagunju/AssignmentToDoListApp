@@ -18,4 +18,5 @@
         Date \t: April 5th 2019 \n
         A simple To Do List for your assignments"</string>
     <string name="visitPageLabel">VisitPage</string>
+    <string name="exportLabel">Export</string>
 </resources>
