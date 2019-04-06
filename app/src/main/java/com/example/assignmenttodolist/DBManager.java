@@ -70,8 +70,8 @@ public class DBManager
     }
 
     // Private methods
-    private void openReadableDB() { db = dbHelper.getReadableDatabase(); }
-    private void openWriteableDB() { db = dbHelper.getWritableDatabase(); }
+    public void openReadableDB() { db = dbHelper.getReadableDatabase(); }
+    public void openWriteableDB() { db = dbHelper.getWritableDatabase(); }
     private void closeDB() {
         if (db!= null) {
             db.close();
@@ -108,7 +108,7 @@ public class DBManager
         }
     }
 
-    // Method		: getAssignments
+/*    // Method		: getAssignments
     // Description	: Returns ArrayList of Assignments matching condition
     // Parameters	: String condition - Optional condition for returned assignments
     // Returns		: ArrayList<Assignment> - Contains list of corresponding assignments
@@ -126,8 +126,9 @@ public class DBManager
         this.closeDB();
 
         return Assignments;
-    }
+    }*/
 
+/*
     // Method		: getAssignmentFromCursor
     // Description	: Uses cursor to return Assignment
     // Parameters	: Cursor - Cursor that reads through result of query
@@ -141,7 +142,9 @@ public class DBManager
         else {
             try {
                 Assignment assignment = new Assignment(
-                        /*cursor.getInt(ASSIGNMENT_ID_COL),*/
+                        */
+/*cursor.getInt(ASSIGNMENT_ID_COL),*//*
+
                         cursor.getString(ASSIGNMENT_NAME_COL),
                         cursor.getString(ASSIGNMENT_DDATE_COL),
                         cursor.getInt(ASSIGNMENT_PRIORITY_COL),
@@ -154,6 +157,7 @@ public class DBManager
             }
         }
     }
+*/
 
     // Method		: insertAssignment
     // Description	: Inserts assignment passed as parameter into table
@@ -218,10 +222,7 @@ public class DBManager
     }
 
 
-/*    public boolean populateList() {
-        String[] columns = {ASSIGNMENT_NAME, ASSIGNMENT_DDATE, ASSIGNMENT_PRIORITY, ASSIGNMENT_NOTE};
-        int[] to = {R.id.AssignmentName, R.id.AssignmentDDate, R.id.AssignmentPriority};
-    }*/
+
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,43 +240,16 @@ public class DBManager
         return rowCount;
     }
 
-    public List<Assignment> getAllAssignments()
+
+
+    public Cursor viewData()
     {
-        List<Assignment> allAssignmentList = new ArrayList<>();
-        this.openWriteableDB();
-        Cursor dataCursor = db.rawQuery("SELECT * FROM "+ ASSIGNMENT_TABLE+" ;", null);
-        StringBuffer buffer = new StringBuffer();
-        Assignment assignment = null;
+        this.openReadableDB();
+        String query = "Select * from " + ASSIGNMENT_TABLE;
+        Cursor cursor = db.rawQuery(query, null);
 
-        if(dataCursor.getCount() == 0){return null;}
-        else{
-            try{
-
-                while(dataCursor.moveToNext())
-                {
-                    assignment = new Assignment();
-
-                    String assignmentName = dataCursor.getString(dataCursor.getColumnIndexOrThrow("AssignmentName"));
-                    assignment.Assignment_Name = assignmentName;
-                    buffer.append(assignment);
-
-                    allAssignmentList.add(assignment);
-
-                }
-
-                for(Assignment mo:allAssignmentList)
-                {
-                    Log.i("This is a test I guess ", mo.Assignment_Name);
-                }
-            }
-            catch (Exception databaseError)
-            {
-                Log.e("Error","Received an exception " + databaseError.getMessage());
-                return null;
-            }
-        }
-
-        return allAssignmentList;
+        return cursor;
     }
+
 
 }

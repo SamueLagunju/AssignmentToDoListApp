@@ -7,4 +7,14 @@
     <string name="assignmentNameLabel">Assignment Name</string>
     <string name="dueDateLabel">Due Date</string>
     <string name="add_note_label">Add Extra Note</string>
+    <string name="priority_level_3">3</string>
+    <string name="priority_level_2">2</string>
+    <string name="priority_level_1">1</string>
+    <string name="about_description">"
+        Assignment 02 \t: Assignment To Do List Version #2 \n
+        Programmers \t: Gabriel Stewart \n
+                    \t\t  Connor Lynch \n
+                    \t\t  Oloruntoba Samuel Lagunju \n
+        Date \t: April 5th 2019 \n
+        A simple To Do List for your assignments"</string>
 </resources>

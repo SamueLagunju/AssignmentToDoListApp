@@ -2,6 +2,7 @@ package com.example.assignmenttodolist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,7 +13,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.util.Log;
 
@@ -23,6 +26,17 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+ * FILE:			MainActivity.java
+ * PROJECT:		    assignmentApp
+ * PROGRAMMER:	    Oloruntoba Lagunju.
+ *                  Gabriel Stewart
+ *                  Connor Lynch
+ * DATE:			April 5th 2019
+ * DESCRIPTION:     This is a file that supports code for the main activity of the app
+ *                  developed in java
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -146,14 +160,29 @@ public class MainActivity extends AppCompatActivity {
         startActivity(viewIntent);
     }
 
-    //I am incomplete
-    public void PopulateList(ArrayList<Assignment> AssignmentList)
+
+    private void viewData()
     {
-       /* ListView AssignmentListView = findViewById(R.id.taskView);
-        ArrayAdapter<Assignment> arrayAdapter = new ArrayAdapter<Assignment>(
-                this, android.R.layout.simple_list_item_1, AssignmentList
-        );
-        AssignmentListView.setAdapter(arrayAdapter);*/
+        databaseManager = new DBManager(getApplicationContext());
+        Cursor cursor = databaseManager.viewData();
+
+        if(cursor.getCount() == 0){
+            Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+        }
+
+        else
+        {
+            while(cursor.moveToNext())
+            {
+                assignmentArrayList.add(cursor.getString(1)
+                        + "\n\nDue Date: " + cursor.getString(2)
+                        + "\n\nPriority: " + cursor.getString(3));
+            }
+        }
+
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, assignmentArrayList);
+
+        assignmentList.setAdapter(listAdapter);
     }
 
 
