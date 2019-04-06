@@ -12,11 +12,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 // Class   	    : DBManager
@@ -37,21 +32,10 @@ public class DBManager
 
     // Assignment Table Constants
     public static final String ASSIGNMENT_TABLE = "Assignment";
-
-    public static final String ASSIGNMENT_ID = "AssignmentID";
-    public static final int ASSIGNMENT_ID_COL = 0;
-
     public static final String ASSIGNMENT_NAME = "AssignmentName";
-    public static final int ASSIGNMENT_NAME_COL = 1;
-
     public static final String ASSIGNMENT_DDATE = "DueDate";
-    public static final int ASSIGNMENT_DDATE_COL = 2;
-
     public static final String ASSIGNMENT_PRIORITY = "PRIORITY";
-    public static final int ASSIGNMENT_PRIORITY_COL = 3;
-
     public static final String ASSIGNMENT_NOTE = "NOTE";
-    public static final int ASSIGNMENT_NOTE_COL = 4;
 
     // Table CREATE and DROP Constants
     public static final String CREATE_ASSIGNMENT_TABLE = "CREATE TABLE " + ASSIGNMENT_TABLE + " (" +
@@ -80,7 +64,7 @@ public class DBManager
 
     // Class   	    : DBHelper
     // Description	: This is a helper class to manage database creation operations
-    // Programmer	: Gabriel Stewart
+    // Programmer	: Marc Bueno
     // Sources      : Marc Bueno Sample Code
     //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
     private static class DBHelper extends SQLiteOpenHelper {
@@ -94,9 +78,6 @@ public class DBManager
             // Create table
             db.execSQL(CREATE_ASSIGNMENT_TABLE);
 
-            // Insert a default assignment
-            //db.execSQL("INSERT INTO Assignment VALUES (1, 'Example', 'March 5th, 2019', 1, 'This is an example')");
-
         }
 
         @Override
@@ -107,57 +88,6 @@ public class DBManager
             db.execSQL(DROP_ASSIGNMENT_TABLE);
         }
     }
-
-/*    // Method		: getAssignments
-    // Description	: Returns ArrayList of Assignments matching condition
-    // Parameters	: String condition - Optional condition for returned assignments
-    // Returns		: ArrayList<Assignment> - Contains list of corresponding assignments
-    // Sources      : Marc Bueno Sample Code
-    //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
-    public ArrayList<Assignment> getAssignments(String condition) {
-        this.openReadableDB();
-        Cursor cursor = db.query(ASSIGNMENT_TABLE, null, null, null, null, null, null);
-        ArrayList<Assignment> Assignments = new ArrayList<Assignment>();
-        while (cursor.moveToNext()) {
-            Assignments.add(getAssignmentFromCursor(cursor));
-        }
-        if (cursor != null)
-            cursor.close();
-        this.closeDB();
-
-        return Assignments;
-    }*/
-
-/*
-    // Method		: getAssignmentFromCursor
-    // Description	: Uses cursor to return Assignment
-    // Parameters	: Cursor - Cursor that reads through result of query
-    // Returns		: Assignment - Assignnment class instance containing requested assignment data
-    // Sources      : Marc Bueno Sample Code
-    //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
-    private static Assignment getAssignmentFromCursor(Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0) {
-            return null;
-        }
-        else {
-            try {
-                Assignment assignment = new Assignment(
-                        */
-/*cursor.getInt(ASSIGNMENT_ID_COL),*//*
-
-                        cursor.getString(ASSIGNMENT_NAME_COL),
-                        cursor.getString(ASSIGNMENT_DDATE_COL),
-                        cursor.getInt(ASSIGNMENT_PRIORITY_COL),
-                        cursor.getString(ASSIGNMENT_NOTE_COL));
-                return assignment;
-
-            }
-            catch (Exception e) {
-                return null;
-            }
-        }
-    }
-*/
 
     // Method		: insertAssignment
     // Description	: Inserts assignment passed as parameter into table
@@ -180,53 +110,6 @@ public class DBManager
         return rowID;
     }
 
-    // Method		: updateAssignment
-    // Description	: Updates assignment in table corresponding to passed assignment ID
-    // Parameters	: Assignment - Assignment to replace existing assignment in table
-    // Returns		: Int rowCount - Number of rows modified. Should be one if changing one assignment
-    // Sources      : Marc Bueno Sample Code
-    //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
-    public int updateAssignment(Assignment assignment) {
-        ContentValues cv = new ContentValues();
-        //cv.put(ASSIGNMENT_ID, assignment.Assignment_ID);
-        cv.put(ASSIGNMENT_NAME, assignment.Assignment_Name);
-        cv.put(ASSIGNMENT_DDATE, assignment.Assignment_DDate);
-        cv.put(ASSIGNMENT_PRIORITY, assignment.Assignment_Priority);
-        cv.put(ASSIGNMENT_NOTE, assignment.Assignment_Note);
-
-        String where = ASSIGNMENT_NAME + "= ?";
-        String[] whereArgs = {String.valueOf(assignment.Assignment_Name)};
-
-        this.openWriteableDB();
-        int rowCount = db.update(ASSIGNMENT_TABLE, cv, where, whereArgs);
-        this.closeDB();
-
-        return rowCount;
-    }
-
-    // Method		: deleteAssignment
-    // Description	: Deletes assignment in table corresponding to passed assignment ID
-    // Parameters	: long id - Assignment ID to delete
-    // Returns		: Int rowCount - Number of rows modified. Should be one if changing one assignment
-    // Sources      : Marc Bueno Sample Code
-    //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
-    public int deleteAssignment (String name) {
-        String where = ASSIGNMENT_NAME + "= ?";
-        String[] whereArgs = { String.valueOf(name) };
-
-        this.openWriteableDB();
-        int rowCount = db.delete(ASSIGNMENT_TABLE, where, whereArgs);
-        this.closeDB();
-
-        return rowCount;
-    }
-
-
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     // Method		: deleteAllAssignments()
     // Description	: Deletes all assignment in table
     // Parameters	: N/A
@@ -240,8 +123,10 @@ public class DBManager
         return rowCount;
     }
 
-
-
+    // Method		: viewData()
+    // Description	: Returns a cursor for query results, displaying all assignments
+    // Parameters	: N/A
+    // Returns		: Cursor cursor - Allows walking through query results
     public Cursor viewData()
     {
         this.openReadableDB();
