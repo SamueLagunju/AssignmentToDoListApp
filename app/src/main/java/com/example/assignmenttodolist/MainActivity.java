@@ -1,11 +1,17 @@
+//  FILE        :	MainActivity.java
+//  PROJECT     :   PROG3150-A2
+//  PROGRAMMERs :	Oloruntoba Lagunju
+//                  Gabriel Stewart
+//                  Connor Lynch
+//  DATE        :	April 1, 2019
+//  DESCRIPTION :   This file contains the source code for the MainActivity class
+
 package com.example.assignmenttodolist;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,18 +19,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 /*
  * FILE:			MainActivity.java
@@ -33,20 +35,19 @@ import java.util.List;
  *                  Gabriel Stewart
  *                  Connor Lynch
  * DATE:			April 5th 2019
- * DESCRIPTION:     This is a file that supports code for the main activity of the app
- *                  developed in java
+ * DESCRIPTION:     This class contains the source code for primary app functionality, possessing methods
+ *                  to call external activities when required
  */
-
 public class MainActivity extends AppCompatActivity {
 
+    // Class data members
     DBManager databaseManager;
     ArrayList<String> assignmentArrayList;
-
     ArrayAdapter listAdapter;
     ListView assignmentList;
 
     /*
-     *  Function        :   protected void onCreate(Bundle savedInstanceState)
+     *  Function        :   protected void onCreate
      *  Description     :   Creates the main activity
      *  Parameters      :   Bundle savedInstanceState
      *  Returns         :   N/A
@@ -62,10 +63,14 @@ public class MainActivity extends AppCompatActivity {
         assignmentList = findViewById(R.id.assignment_list_view);
 
         viewData(3);
-
-
     }
 
+    /*
+     *  Function        :   onCreateOptionsMenu
+     *  Description     :   Event handler for Options Menu creation
+     *  Parameters      :   Menu menu
+     *  Returns         :   N/A
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -73,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /*
+     *  Function        :   onOptionsItemSelected
+     *  Description     :   Event handler for item selection in options menu
+     *  Parameters      :   MenuItem item
+     *  Returns         :   N/A
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -99,13 +110,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-     *  Function        :   public void onClick(View whatButton)
-     *  Description     :   Does a set of instructions based on what button was clicked
+     *  Function        :   public void onClick
+     *  Description     :   Performs a set of instructions based on what button was clicked
      *  Parameters      :   View whatButton
      *  Returns         :   N/A
      */
     public void onClick(View whatButton) {
-        //If the button to add an assignment was clicked.
+
         //If the button to view the about activity was clicked
         if (whatButton == findViewById(R.id.viewSettings)) {
             //Creating an intent to start an activity
@@ -113,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(addingAssIntent); //Starting the activity
         }
 
-
+        //If the button to add an assignment was clicked.
         if (whatButton == findViewById(R.id.AddAssignmentFloatingBtn)) {
             Log.i("User Action:", "User is adding an assignment");
             try {
@@ -128,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-     *  Function        :   onActivityResult(int requestCode, int codeResult, Intent intentData)
+     *  Function        :   onActivityResult
      *  Description     :   Processes results from started activities
      *  Parameters      :   int requestCode
      *                      int codeResult
@@ -155,7 +166,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /*
+     *  Function        :   viewData
+     *  Description     :   Displays assignments according to selected sorting type
+     *  Parameters      :   int whatOrder
+     *  Returns         :   N/A
+     */
     private void viewData (int whatOrder) {
         databaseManager = new DBManager(getApplicationContext());
         Cursor cursor;
@@ -211,10 +227,9 @@ public class MainActivity extends AppCompatActivity {
         assignmentList.setAdapter(listAdapter);
     }
 
-
     /*
-     *  Function        :   public void ExportToTxt(View view)
-     *  Description     :   button that exports list items to a text file in downloads
+     *  Function        :   ExportToTxt
+     *  Description     :   Exports data to specified text file
      *  Parameters      :   View view
      *  Returns         :   N/A
      */
@@ -263,8 +278,6 @@ public class MainActivity extends AppCompatActivity {
 
         }).start();
     }
-
-
 }
 
 

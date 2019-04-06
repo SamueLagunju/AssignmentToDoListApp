@@ -71,7 +71,7 @@ public class DBManager
         public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
         }
-
+        // Handler for creation, creates instance of table
         @Override
         public void onCreate(SQLiteDatabase db) {
 
@@ -79,7 +79,7 @@ public class DBManager
             db.execSQL(CREATE_ASSIGNMENT_TABLE);
 
         }
-
+        // Handler for changing of database version, will drop table
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.d("Assignment Table", "Upgrading db from version "
@@ -97,7 +97,6 @@ public class DBManager
     //              : https://conestoga.desire2learn.com/d2l/le/content/244302/viewContent/5220636/View
     public long insertAssignment(Assignment assignment) {
         ContentValues cv = new ContentValues();
-        //cv.put(ASSIGNMENT_ID, assignment.Assignment_ID);
         cv.put(ASSIGNMENT_NAME, assignment.Assignment_Name);
         cv.put(ASSIGNMENT_DDATE, assignment.Assignment_DDate);
         cv.put(ASSIGNMENT_PRIORITY, assignment.Assignment_Priority);
@@ -111,7 +110,7 @@ public class DBManager
     }
 
     // Method		: deleteAllAssignments()
-    // Description	: Deletes all assignment in table
+    // Description	: Deletes all assignment in table (Only used for debugging to clear DB)
     // Parameters	: N/A
     // Returns		: Int rowCount - Number of rows modified.
     // Source       : http://android-er.blogspot.com/2011/06/simple-example-using-androids-sqlite_02.html
@@ -129,23 +128,25 @@ public class DBManager
     // Returns		: Cursor cursor - Allows walking through query results
     public Cursor viewData(String whatOrder)
     {
+        // Required data members
         String query;
         Cursor cursor;
 
+        // Return results sorted by date
         if(whatOrder == "Date")
         {
             this.openReadableDB();
             query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY DueDate";
             cursor = db.rawQuery(query, null);
         }
-
+        // Return results sorted by priority
         else if( whatOrder == "Priority")
         {
             this.openReadableDB();
             query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY PRIORITY";
             cursor = db.rawQuery(query, null);
         }
-
+        // Return results sorted by name
         else
         {
             this.openReadableDB();
@@ -154,6 +155,4 @@ public class DBManager
         }
         return cursor;
     }
-
-
 }
