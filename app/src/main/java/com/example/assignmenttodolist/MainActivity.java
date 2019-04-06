@@ -87,6 +87,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
+        switch(id)
+        {
+            case R.id.SortByDateMenuOption:
+            {
+                //Clearing the old list
+                listAdapter.clear();
+                viewData(1);
+                break;
+            }
+
             case R.id.SortByPriorityMenuOption:
             {
                 //Clearing the old list
@@ -210,33 +220,74 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             }
-
-            case 3:
-            {
-
-                cursor = databaseManager.viewData("AssignmentName");
-
-                if(cursor.getCount() == 0){
-                    Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
-                }
-
-                else
-                {
-                    while(cursor.moveToNext())
-                    {
-                        assignmentArrayList.add(cursor.getString(0)
-                                + "\n\nDue Date: " + cursor.getString(1)
-                                + "\n\nPriority: " + cursor.getString(2));
-                    }
-                }
-                break;
-            }
-
         }
 
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, assignmentArrayList);
 
         assignmentList.setAdapter(listAdapter);
     }
+
+
+    /*
+     *  Function        :    public void ExportToTxt(View view)
+     *  Description     :   button that exports list items to a text file in downloads
+     *  Parameters      :   View view
+     *  Returns         :   N/A
+     */
+    public void ExportToTxt(View view) {
+        final Context currentContext = getApplicationContext();
+        Toast.makeText(currentContext, "Beginning Export", Toast.LENGTH_SHORT).show();
+
+
+        new Thread(new Runnable() {
+          public void run() {
+
+        // Get the directory for the user's public pictures directory.
+        final File path =
+                Environment.getExternalStoragePublicDirectory
+                        (
+                                //Environment.DIRECTORY_PICTURES
+                                Environment.DIRECTORY_DOWNLOADS
+                        );
+
+        // Make sure the path directory exists.
+        if(!path.exists())
+        {
+            // Make it, if it doesn't exit
+            path.mkdirs();
+        }
+
+        final File file = new File(path, "TodoListExport.txt");
+
+        // Save your stream, don't forget to flush() it before closing it.
+
+        try
+        {
+            file.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            //put formatted data between the parenthesis
+            myOutWriter.append("test");
+
+            myOutWriter.close();
+
+            fOut.flush();
+            fOut.close();
+        }
+        catch (IOException e)
+        {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+
+                   }
+
+            }).start();
+        }
+
+
+
+
+
+
 
 }
