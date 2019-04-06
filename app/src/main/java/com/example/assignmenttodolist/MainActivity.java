@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                     FileOutputStream fOut = new FileOutputStream(file);
                     OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
                     //put formatted data between the parenthesis
-                    myOutWriter.append("test");
+                    myOutWriter.append(assignmentArrayList.toString());
 
                     myOutWriter.close();
 
