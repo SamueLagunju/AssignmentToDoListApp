@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         assignmentList = findViewById(R.id.assignment_list_view);
 
-        viewData();
+        viewData(3);
 
 
     }
@@ -77,8 +77,24 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch(id)
+        {
+            case R.id.SortByDateMenuOption:
+            {
+                //Clearing the old list
+                listAdapter.clear();
+                viewData(1);
+                break;
+            }
 
-
+            case R.id.SortByPriorityMenuOption:
+            {
+                //Clearing the old list
+                listAdapter.clear();
+                viewData(2);
+                break;
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -132,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 //Clearing the old list
                 listAdapter.clear();
-                viewData();
+                viewData(3);
             }
             else
             {
@@ -147,37 +163,75 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-     *  Function        :   public void VisitPage(View view)
-     *  Description     :   takes the user to the econestoga website for our favourite course, Mobile Application Development
-     *  Parameters      :   View view
-     *  Returns         :   N/A
-     */
-    public void VisitPage(View view) {
-        String link = "https://conestoga.desire2learn.com/d2l/home/244302";
-        Uri viewURI = Uri.parse(link);
-        Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewURI);
-        startActivity(viewIntent);
-    }
 
-
-    private void viewData()
+    private void viewData(int whatOrder)
     {
         databaseManager = new DBManager(getApplicationContext());
-        Cursor cursor = databaseManager.viewData();
+        Cursor cursor;
 
-        if(cursor.getCount() == 0){
-            Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
-        }
-
-        else
+        switch(whatOrder)
         {
-            while(cursor.moveToNext())
+            case 1:
             {
-                assignmentArrayList.add(cursor.getString(1)
-                        + "\n\nDue Date: " + cursor.getString(2)
-                        + "\n\nPriority: " + cursor.getString(3));
+                cursor = databaseManager.viewData("Date");
+
+                if(cursor.getCount() == 0){
+                    Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+                }
+
+                else
+                {
+                    while(cursor.moveToNext())
+                    {
+                        assignmentArrayList.add(cursor.getString(0)
+                                + "\n\nDue Date: " + cursor.getString(1)
+                                + "\n\nPriority: " + cursor.getString(2));
+                    }
+                }
+                break;
             }
+
+            case 2:
+            {
+                cursor = databaseManager.viewData("Priority");
+
+                if(cursor.getCount() == 0){
+                    Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+                }
+
+                else
+                {
+                    while(cursor.moveToNext())
+                    {
+                        assignmentArrayList.add(cursor.getString(0)
+                                + "\n\nDue Date: " + cursor.getString(1)
+                                + "\n\nPriority: " + cursor.getString(2));
+                    }
+                }
+                break;
+            }
+
+            case 3:
+            {
+
+                cursor = databaseManager.viewData("AssignmentName");
+
+                if(cursor.getCount() == 0){
+                    Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+                }
+
+                else
+                {
+                    while(cursor.moveToNext())
+                    {
+                        assignmentArrayList.add(cursor.getString(0)
+                                + "\n\nDue Date: " + cursor.getString(1)
+                                + "\n\nPriority: " + cursor.getString(2));
+                    }
+                }
+                break;
+            }
+
         }
 
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, assignmentArrayList);

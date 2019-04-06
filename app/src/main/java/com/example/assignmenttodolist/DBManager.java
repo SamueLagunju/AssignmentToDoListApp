@@ -242,11 +242,28 @@ public class DBManager
 
 
 
-    public Cursor viewData()
+    public Cursor viewData(String whatOrder)
     {
-        this.openReadableDB();
-        String query = "Select * from " + ASSIGNMENT_TABLE;
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor;
+        if(whatOrder == "Date")
+        {
+            this.openReadableDB();
+            String query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY DueDate";
+            cursor = db.rawQuery(query, null);
+        }
+        else if(whatOrder == "Priority")
+        {
+            this.openReadableDB();
+            String query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY PRIORITY";
+            cursor = db.rawQuery(query, null);
+        }
+
+        else
+        {
+            this.openReadableDB();
+            String query = "Select * from " + ASSIGNMENT_TABLE + " ORDER BY AssignmentName";
+            cursor = db.rawQuery(query, null);
+        }
 
         return cursor;
     }
